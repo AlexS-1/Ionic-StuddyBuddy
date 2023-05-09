@@ -1,0 +1,7 @@
+{
+  "name": "Ionic-StuddyBuddy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
