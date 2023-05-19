@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Favorites</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!--
+<ion-header>
+  <ion-toolbar >
+
+    <ion-title>
+      {{title}}
+    </ion-title>
+    <ion-buttons slot="end">
+     
+      <ion-button [routerLink]="['/', 'developers']">
+        <ion-icon name="construct"></ion-icon>
+      </ion-button>
+
+      <ion-button [routerLink]="['/', 'animals']">
+        <ion-icon name="fish"></ion-icon>
+      </ion-button>
+
+   
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content>
+  <!--<ion-searchbar [(ngModel)]="searchTerm"></ion-searchbar>-->
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let animal of animals ">
+      <ion-item
+        [routerLink]="['/animals', animal.id]"
+        class="ion-no-padding"
+        style="margin: 4px !important">
+
+        <ion-thumbnail slot="start">
+          <img [src]="animal.imageUrl" alt="{{ animal.name }} image" />
+        </ion-thumbnail>
+
+        <ion-label>{{ animal.name }}</ion-label>
+
+        <!--
+        <ion-badge slot="end" color="primary" *ngIf="animal.favorite">
+          Favorite
+        </ion-badge>
+        -->
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option
+          color="success"
+          *ngIf="!animal.favorite"
+          (click)="toggleFavorite(animal)">
+          <ion-icon name="heart"></ion-icon>
+        </ion-item-option>
+        
+        <ion-item-option
+          color="danger"
+          *ngIf="animal.favorite"
+          (click)="toggleFavorite(animal)">
+          <ion-icon name="heart-dislike"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
