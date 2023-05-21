@@ -14,9 +14,9 @@ const routes: Routes = [
       import('./pages/animal-list/animal-list.module').then( m => m.AnimalListPageModule)
   },
   {
-    path: 'animals/:id',
+    path: 'courses/:id',
     loadChildren: () =>
-      import('./pages/animal-detail/animal-detail.module').then( m => m.AnimalDetailPageModule)
+      import('./pages/course-detail/course-detail.module').then( m => m.CourseDetailPageModule)
   },
   {
     path: 'developers',

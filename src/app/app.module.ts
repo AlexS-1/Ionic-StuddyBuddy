@@ -41,7 +41,7 @@ import {AppRoutingModule} from './app-routing.module';
     BrowserModule,
     IonicModule.forRoot({
       rippleEffect: false,
-      mode: 'ios'
+      mode: 'md'
     }),
     ReactiveFormsModule,
     FormsModule,
