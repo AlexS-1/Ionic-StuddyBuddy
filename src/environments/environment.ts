@@ -1,12 +1,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyDMg3i_HPHF6ZGVLYFgupLT4Y5jipK-1Tg",
-    authDomain: "favoritos-plantas-animales.firebaseapp.com",
-    projectId: "favoritos-plantas-animales",
-    storageBucket: "favoritos-plantas-animales.appspot.com",
-    messagingSenderId: "820281706374",
-    appId: "1:820281706374:web:71eb036401773259e50e07"
+    apiKey: "AIzaSyBDRU2DNUqkZd5pwF3sTS2Lb3vyX09s0es",
+    authDomain: "studdybuddy-2744e.firebaseapp.com",
+    projectId: "studdybuddy-2744e",
+    storageBucket: "studdybuddy-2744e.appspot.com",
+    messagingSenderId: "334303868301",
+    appId: "1:334303868301:web:d89e95cb5be9ab48f3f9c4"
   }
 };
 

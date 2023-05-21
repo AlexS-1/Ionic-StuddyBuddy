@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { Animal } from "../../models/animal.model";
 import { AnimalService } from "../../services/animal.service";
 import { DatabaseService } from "./../../services/database.service";
+import { DbFirebaseService } from "src/app/services/db-firebase.service";
+import { Course } from "src/app/models/course";
 //import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -12,18 +14,23 @@ import { DatabaseService } from "./../../services/database.service";
 })
 export class HomePage implements OnInit {
   
-  animals: Animal[] = [];
+  courses: Course[] = [];
+  course: Course;
   //animals?: Observable<Animal[]>;
 
   constructor(
     private db: DatabaseService,
-    private animalService: AnimalService
-  ) //private toast: ToastController
-  {}
+    private dbFS: DbFirebaseService,
+    private animalService: AnimalService,
+  ) {
 
-  ngOnInit() {
-    this.getAnimals();
+  }
+  ngOnInit(): void {
+    this.getCourses();
+  }
 
+  ionViewDidEnter() {
+    this.getCourses();
     /* this.db.getDatabaseState().subscribe( (dbReady) => {
 
       if (dbReady) {
@@ -34,13 +41,9 @@ export class HomePage implements OnInit {
     }); */
   }
 
-  getAnimals(): void {
-    this.animalService.getFavorites().subscribe((animals) => {
-      this.animals = animals;
-    });
+  async getCourses() {
+    this.courses = await this.dbFS.getAllCourses();
   }
 
-  toggleFavorite(animal: Animal): void {
-    this.animalService.toggleFavorite(animal);
-  }
 }
+
