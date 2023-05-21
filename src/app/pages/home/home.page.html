@@ -33,41 +33,14 @@
 <ion-content>
   <!--<ion-searchbar [(ngModel)]="searchTerm"></ion-searchbar>-->
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let animal of animals ">
+  <ion-list *ngFor="let course of courses">
       <ion-item
-        [routerLink]="['/animals', animal.id]"
+        [routerLink]="['/animals', course.id]"
         class="ion-no-padding"
         style="margin: 4px !important">
 
-        <ion-thumbnail slot="start">
-          <img [src]="animal.imageUrl" alt="{{ animal.name }} image" />
-        </ion-thumbnail>
+        <ion-label>{{ course.title }}</ion-label>
 
-        <ion-label>{{ animal.name }}</ion-label>
-
-        <!--
-        <ion-badge slot="end" color="primary" *ngIf="animal.favorite">
-          Favorite
-        </ion-badge>
-        -->
       </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option
-          color="success"
-          *ngIf="!animal.favorite"
-          (click)="toggleFavorite(animal)">
-          <ion-icon name="heart"></ion-icon>
-        </ion-item-option>
-        
-        <ion-item-option
-          color="danger"
-          *ngIf="animal.favorite"
-          (click)="toggleFavorite(animal)">
-          <ion-icon name="heart-dislike"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
   </ion-list>
 </ion-content>
