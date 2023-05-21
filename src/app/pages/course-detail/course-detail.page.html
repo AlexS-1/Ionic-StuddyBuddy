@@ -1,22 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="animals"></ion-back-button>
+      <ion-back-button defaultHref="courses"></ion-back-button>
     </ion-buttons>
-    <ion-title>Animal Details</ion-title>
+    <ion-title>Course Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="animal" class="ion-no-margin" style="margin: 4px !important">
-    <img [src]="animal.imageUrl" />
+  <ion-card *ngIf="course" class="ion-no-margin" style="margin: 4px !important">
 
     <ion-card-header>
-      <ion-card-title>{{ animal.name }}</ion-card-title>
+      <ion-card-title>{{ course.title }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      <p>{{ animal.description }}</p>
+      <p>{{ course.description }}</p>
     </ion-card-content>
 
     <ion-item lines="none">

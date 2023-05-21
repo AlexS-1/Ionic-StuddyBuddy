@@ -14,7 +14,7 @@ export class DbFirebaseService {
 
   db = this.fS.firestore;
 
-  //ADD DATA TO FIRESTORE
+//CREATE DATA IN FIRESTORE
 
   async addTest() {
     const date = {
@@ -46,6 +46,8 @@ export class DbFirebaseService {
     return "Course already exists";
   }
 
+//READ DATA IN FIRESTORE
+
   async getAllCourses() {
     const courseCollection = await this.db.collection('courses').get();
     const allCourses: Course[] = [];
@@ -59,6 +61,11 @@ export class DbFirebaseService {
       allCourses.push(course);
     });
     return allCourses;
+  }
+
+  async getCourseById(id: string) {
+    const courseObject = await this.db.collection('courses').doc(this.cyrb53(id.toString()).toString()).get();
+    return courseObject;
   }
 
   // 53-Bit hash function from https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
