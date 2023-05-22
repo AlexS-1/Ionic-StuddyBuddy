@@ -39,9 +39,9 @@
             <input type="password" [(ngModel)]="repeatedPassword" class="form-control" name="repeatedPassword" placeholder="Repeat Password" minlength="8" maxlength="25" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" (keyup)="checkMatchingPasswords($event)" required>
         </div>
         <p class="errorMsg"> {{ message }}</p>
-        <button class="btn" type="submit button" [disabled]="createAccountForm.form.invalid || !passwordValidity">
+        <ion-button class="btn" type="submit button" [disabled]="createAccountForm.form.invalid || !passwordValidity">
             Create Account
-        </button>
+        </ion-button>
         <a href="log-in" routerLink="/log-in" routerLinkActive="active" ariaCurrentWhenActive="page">You already have an Account?</a>
     </form>
 </section>

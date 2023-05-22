@@ -18,11 +18,10 @@
         <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password"  name="password" required>
       </div>
       <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form. valid">Login</button>
+          <ion-button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form. valid">Login</ion-button>
       </div>
       <p>{{ message }}</p>
       <section class="form-group text-center">
-        <a href="forgot-password" routerLink="/forgot-password" routerLinkActive="active" ariaCurrentWhenActive="page">Forgot Password?</a>
         <a href="create-account" routerLink="/create-account" routerLinkActive="active" ariaCurrentWhenActive="page">Don't have an Account yet?</a>
       </section>
     </form>
