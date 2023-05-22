@@ -43,7 +43,6 @@ export class MyCoursesPage implements OnInit {
     this.courseService.getAllCourses().subscribe((courses) => {
       this.courses = courses;
     });
-    console.log("Courses: ", this.courses)
   }
 
   /*toggleFavorite(course: Course): void {

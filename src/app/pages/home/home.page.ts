@@ -1,9 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-
-import { Animal } from "../../models/animal.model";
-import { DatabaseService } from "./../../services/database.service";
-import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { Course } from "src/app/models/course";
+import { DbSqliteService } from "src/app/services/db-sqlite.service";
 //import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -17,12 +14,12 @@ export class HomePage implements OnInit {
   //animals?: Observable<Animal[]>;
 
   constructor(
-    private db: DatabaseService,
-    private dbFS: DbFirebaseService,
+    private dbSQL: DbSqliteService,
   ) {
 
   }
   ngOnInit(): void {
+    this.dbSQL.syncSQLDatabase();
     this.getCourses();
   }
 
@@ -39,7 +36,8 @@ export class HomePage implements OnInit {
   }
 
   async getCourses() {
-    this.courses = await this.dbFS.getAllCourses();
+    this.dbSQL.fetchCourses().subscribe(courses => this.courses = courses);
+    console.log(this.courses);
   }
 
 }
