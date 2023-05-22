@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PersonPageRoutingModule } from './person-routing.module';
+import { MyAreaPageRoutingModule } from './my-area-routing.module';
 
-import { PersonPage } from './person.page';
+import { MyAreaPage } from './my-area.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PersonPageRoutingModule
+    MyAreaPageRoutingModule
   ],
-  declarations: [PersonPage]
+  declarations: [MyAreaPage]
 })
-export class PersonPageModule {}
+export class MyAreaPageModule {}

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
+import { DocumentData } from '@angular/fire/firestore';
 import { User } from '../models/user';
 import { Course } from '../models/course';
+
 
 @Injectable({
   providedIn: 'root'
@@ -121,6 +123,49 @@ export class DbFirebaseService {
     return courseObject;
   }
 
+  async getUserData(username: String) {
+    const userDoc = this.db.collection('users').doc(this.cyrb53(username.toString()).toString()).get();
+    return userDoc
+  }
+
+  async getloggedInData(id: String| null): Promise<DocumentData|null>{
+    if(id == null){
+      return null;
+    }
+    const tokenDoc = await this.db.collection('loggedIn').doc(id.toString()).get()
+    return tokenDoc;
+  }
+
+  async getUserNameByMail(mail: string): Promise<string | null>{
+    //const userDocs = await getDocs(query(collection(this.db, 'users'), where('email', '==', mail)));
+    let docUsername: string | null = null;
+    /*userDocs.forEach((doc) => {
+      if (doc.data()['email'] === mail) {
+        docUsername = doc.data()['username'];
+      }
+    });*/
+    (await this.db.collection('users').where('email', '==', mail).get().then()).forEach((doc) => {
+      if (doc.get('email') === mail) {
+        docUsername = doc.get('username');
+      }
+    });
+    return docUsername;
+  }
+
+//UPDATE DATA IN FIRESTORE
+
+//REMOVE DATA IN FIRESTORE
+// Remove user form logged in user
+async removeloggedInData(id: String| null): Promise<boolean>{
+  if(id == null){
+    return false;
+  }
+  //await deleteDoc(doc(this.db, 'loggedIn', id.toString()));
+  this.db.collection('loggedIn').doc(id.toString()).delete();
+  return true;
+}
+
+//HELPER FUNCTIONS
   // 53-Bit hash function from https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
   private cyrb53(str: string, seed = 0){
     let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
