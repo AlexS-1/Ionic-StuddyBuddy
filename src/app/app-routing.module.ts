@@ -39,14 +39,14 @@ const routes: Routes = [
     import('./pages/song-details/song-details.module').then( m => m.SongDetailsPageModule)
   },
   {
-    path: "folder/:id",
+    path: "create-account",
     loadChildren: () =>
-      import("./pages/folder/folder.module").then((m) => m.FolderPageModule),
+      import("./pages/create-account/create-account.module").then((m) => m.CreateAccountPageModule),
   },
   {
-    path: "category",
+    path: "log-in",
     loadChildren: () =>
-      import("./pages/category/category.module").then((m) => m.CategoryPageModule),
+      import("./pages/log-in/log-in.module").then((m) => m.LogInPageModule),
   },
   {
     path: "person",
