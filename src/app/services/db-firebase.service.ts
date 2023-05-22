@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { User } from 'firebase';
+
+import { User } from '../models/user';
 import { Course } from '../models/course';
 
 @Injectable({
@@ -44,6 +45,58 @@ export class DbFirebaseService {
     }
 
     return "Course already exists";
+  }
+
+  // Receives the users data and enters it to the firebase realtime database
+  // Enter new user only if it does not already exist
+  // INFO: This function adds a default picture and an empty course list to the useres data
+  async addUser(user: User) {
+    let message = "";
+    let allowRegistration = this.checkUserEmailExists(user.email);
+    console.log("call checkFunction", allowRegistration)
+
+    // Here: serach database for doc with matching user-id = this.cyrb53(this.username).toString() --> user_id
+    const userDocument = this.db.collection('users').doc(this.cyrb53(user.username.toString()).toString());
+    if ((await userDocument.get()).exists) {
+      return "Username already exists"
+    } else if(this.checkUserEmailExists(user.email)) {
+      return "E-Mail already exists"
+    } else {
+      // Only add new user account if user is not already in the database and returen appropriate response
+      const data = { 
+        id: this.cyrb53(user.username.toString()), 
+        username: user.username, 
+        firstName: user.firstName,
+        surname: user.surname, 
+        email: user.email, 
+        dateOfBirth: user.dateOfBirth, 
+        password: user.password, 
+        courses: user.courses, 
+        profilePicture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+      }
+      // Creates a new doc with the userId as doc name
+      this.db.collection('users').doc(data.id.toString()).set(data);
+      message = "You successfully registered"
+    }
+    return message;
+  }
+
+  checkUserEmailExists(userEmail: string): boolean {
+    let emailExists: boolean = false;
+    this.db.collection('users').where('email', '==', userEmail)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        emailExists = true;
+      });
+    })
+    .catch((error) => {
+      console.log("Error finding email: ", error);
+    })
+    .finally(() => {
+      return emailExists
+    })
+    return emailExists;
   }
 
 //READ DATA IN FIRESTORE

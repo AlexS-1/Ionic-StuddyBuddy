@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-//import { ToastController } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
@@ -23,19 +22,14 @@ export class AppComponent implements OnInit {
       icon: "home",
     },
     {
-      title: "Animals",
-      url: "/animals",
-      icon: "paw",
+      title: "My Courses",
+      url: "/my-courses",
+      icon: "list",
     },
     {
-      title: "People",
-      url: "/person",
+      title: "My Area",
+      url: "/my-area",
       icon: "person",
-    },
-    {
-      title: "Categories",
-      url: "/category",
-      icon: "medal",
     },
   ];
 
