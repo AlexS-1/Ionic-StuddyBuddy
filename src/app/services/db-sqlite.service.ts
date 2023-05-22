@@ -20,8 +20,10 @@ export class Song {
 })
 export class DbSqliteService {
 
+  debugging = true;
+
   private storage: SQLiteObject;
-  courseList = new BehaviorSubject([]);
+  public courseList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -63,6 +65,7 @@ export class DbSqliteService {
     let userCourses: Course[] = []
     for (let i = 0; i < userCourseIDs.length; i++) {
       const courseDocument = await this.dbFS.getCourseById(userCourseIDs[i].toString())
+      //TODO courseDocument does not exist
       if (courseDocument.exists) {
         let course: Course = {
           id: courseDocument.data()['id'],
@@ -73,15 +76,44 @@ export class DbSqliteService {
         }
         userCourses.push(course);
       }
-    }    
+    }
+
+    let allCourses: Course[] = [];
+    allCourses = await this.dbFS.getAllCourses();
+    let allUserCourses: [Course, boolean][];
+    let matching: boolean = false
+    let element: [Course, boolean];
+
+    allCourses.forEach((course) => {
+      for (let i = 0; i < userCourses.length; i++) {
+        if (course.id == userCourses[i].id) {
+          matching = true;
+        }
+      }
+      element = [course, matching]
+      console.log(element)
+      console.log(allUserCourses.push(element));
+      matching = false;
+    });
+
+    console.log("allUserCourses");
+
+    allUserCourses.forEach((element) => {
+      console.log("IAMHERE")
+      this.addCourse(element[0], element[1]);
+    });
+
   }
 
   // Add a course to the SQLite DB
-  async addCourse(course: Course) {
-    let data = [course.id, course.title, course.description, course.createdByUserID, course.imageURL];
+  async addCourse(course: Course, favorite: boolean) {
+    let data = [course.id, course.title, course.description, course.createdByUserID, course.imageURL, ];
+    if (this.debugging) {
+      console.log("addCourse, data: ", data)
+    }
     return this.storage
       .executeSql(
-        "INSERT INTO songtable (id, title, courseDescription, createdByUserID, imagURL) VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO songtable (id, title, courseDescription, createdByUserID, imagURL, favourite) VALUES (?, ?, ?, ?, ?, ?)",
         data
       )
       .then((res) => {
@@ -91,7 +123,7 @@ export class DbSqliteService {
 
   // Get list
   async getCourses() {
-    return this.storage
+    let temp = this.storage
       .executeSql("SELECT * FROM favCourses", [])
       .then((res) => {
         let items: Course[] = [];
@@ -108,9 +140,8 @@ export class DbSqliteService {
         }
         this.courseList.next(items);
       });
+    return temp;
   }
-
-
   
   dbState() {
     return this.isDbReady.asObservable();

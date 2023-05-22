@@ -17,5 +17,6 @@ CREATE TABLE IF NOT EXISTS favCourses(
     title TEXT,
     courseDescription TEXT,
     createdByUser TEXT,
-    imageURL TEXT
+    imageURL TEXT,
+    favourite BOOLEAN
 );

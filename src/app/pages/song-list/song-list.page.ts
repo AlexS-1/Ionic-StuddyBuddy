@@ -24,7 +24,7 @@ export class SongListPage implements OnInit {
   ngOnInit() {
     this.db.dbState().subscribe((res) => {
       if (res) {
-        this.db.fetchSongs().subscribe((item) => {
+        this.db.getSongs().subscribe((item) => {
           this.Data = item;
         });
       }
