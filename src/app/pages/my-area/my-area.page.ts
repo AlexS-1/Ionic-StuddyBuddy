@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { User } from "src/app/models/user";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { AuthService } from "src/app/services/auth-service.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-my-area",
@@ -22,7 +23,7 @@ export class MyAreaPage implements OnInit {
     profilePicture: ''
   };
 
-  constructor(private dbFS: DbFirebaseService, private authService: AuthService) {
+  constructor(private dbFS: DbFirebaseService, private authService: AuthService, private router: Router) {
 
   }
 
@@ -41,6 +42,11 @@ export class MyAreaPage implements OnInit {
       this.user.dateOfBirth = user.data()['dateOfBirth'];
       this.user.profilePicture = user.data()['profilePicture'];
     }
+  }
+
+  logout() {
+    this.authService.logout()
+    this.router.navigateByUrl('/home')
   }
 
 }
