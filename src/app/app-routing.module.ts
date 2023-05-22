@@ -10,9 +10,9 @@ const routes: Routes = [
       import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'animals',
+    path: 'my-courses',
     loadChildren: () =>
-      import('./pages/animal-list/animal-list.module').then( m => m.AnimalListPageModule)
+      import('./pages/my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
   },
   {
     path: 'courses/:id',
