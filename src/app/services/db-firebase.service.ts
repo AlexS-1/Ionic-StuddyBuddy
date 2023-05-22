@@ -111,8 +111,10 @@ export class DbFirebaseService {
         id: doc.data()['id'],
         title: doc.data()['title'],
         description: doc.data()['description'],
-        createdByUserID: doc.data()['createdByUserID']
+        createdByUserID: doc.data()['createdByUserID'],
+        imageURL: doc.data()['imageURL']
       }
+      console.log(course.imageURL)
       allCourses.push(course);
     });
     return allCourses;
