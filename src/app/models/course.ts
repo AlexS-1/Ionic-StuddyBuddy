@@ -4,4 +4,5 @@ export interface Course {
     description: string;
     createdByUserID: number;
     averageRating?: number;
+    imageURL?: string;
 }
