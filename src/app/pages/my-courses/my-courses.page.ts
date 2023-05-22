@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Animal } from "../../models/animal.model";
-import { AnimalService } from "../../services/animal.service";
+import { CourseService } from "../../services/course.service";
 import { DatabaseService } from "../../services/database.service";
 import { Course } from "src/app/models/course";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
+import { DbSqliteService } from "src/app/services/db-sqlite.service";
 
 @Component({
   selector: "app-my-courses-list",
@@ -18,9 +19,11 @@ export class MyCoursesPage implements OnInit {
 
   constructor(
     //private db: DatabaseService,
-    //private animalService: AnimalService,
-    private dbFS: DbFirebaseService,
-  ) {}
+    private courseService: CourseService,
+    //private dbFS: DbFirebaseService,
+    private dbSQL: DbSqliteService
+  ) {
+  }
 
   /* ngOnInit(): void {
     this.getAnimals();
@@ -28,32 +31,31 @@ export class MyCoursesPage implements OnInit {
   } */
 
   ngOnInit() {    
-    /* this.db.getDatabaseState().subscribe((dbReady) => {
+    this.dbSQL.getDatabaseState().subscribe((dbReady) => {
       if (dbReady) {
-        this.getAnimals();
+        this.getCourses();
       }
-    }); */
-
-    //this.getAnimals();
-  }
-
-  /*getAnimals(): void {
-    this.animalService.getAllAnimals().subscribe((animals) => {
-      this.animals = animals;
-    });
-  }
-
-  toggleFavorite(animal: Animal): void {
-    animal.favorite = !animal.favorite;
-    this.animalService.toggleFavorite(animal);
-  }*/
-
-  ionViewDidEnter() {
+    }); 
     this.getCourses();
   }
 
+  getCourses(): void {
+    this.courseService.getAllCourses().subscribe((courses) => {
+      this.courses = courses;
+    });
+    console.log("Courses: ", this.courses)
+  }
+
+  /*toggleFavorite(course: Course): void {
+    course.favorite = !animal.favorite;
+    this.courseService.toggleFavorite(course);
+  }
+
+  /*ionViewDidEnter() {
+    this.getCourses();
+  }
 
   async getCourses() {
-    this.courses = await this.dbFS.getAllCourses();
-  }
+    this.courses = await this.dbSQL.getCourses();
+  }*/
 }

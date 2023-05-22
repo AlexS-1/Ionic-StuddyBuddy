@@ -4,6 +4,10 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { SQLitePorter } from "@ionic-native/sqlite-porter/ngx";
 import { SQLite, SQLiteObject } from "@ionic-native/sqlite/ngx";
+import { DbFirebaseService } from "./db-firebase.service";
+import { AuthService } from "./auth-service.service";
+import { User } from "../models/user";
+import { Course } from "../models/course";
 
 export class Song {
   id: number;
@@ -17,14 +21,16 @@ export class Song {
 export class DbSqliteService {
 
   private storage: SQLiteObject;
-  songsList = new BehaviorSubject([]);
+  courseList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private platform: Platform,
     private sqlite: SQLite,
     private http: HttpClient,
-    private sqlPorter: SQLitePorter
+    private sqlPorter: SQLitePorter,
+    private dbFS: DbFirebaseService,
+    private auth: AuthService
   ) {
     this.platform.ready().then(() => {
       this.sqlite
@@ -38,13 +44,80 @@ export class DbSqliteService {
         });
     });
   }
+
+  getDatabaseState() {
+    return this.isDbReady.asObservable();
+  }
+
+  //Method called when user is loggedIn to sync local database with firestore from website
+  async syncSQLDatabase() {
+    //Get user's courses
+    const username = await this.auth.getCurrentUserName();
+    const userDocument = await this.dbFS.getUserData(username);
+    let userCourseIDs: number[] = [];
+    if (userDocument.exists) {
+      userCourseIDs = userDocument.data()['courses']
+    }
+
+    //Get course data for user's courses
+    let userCourses: Course[] = []
+    for (let i = 0; i < userCourseIDs.length; i++) {
+      const courseDocument = await this.dbFS.getCourseById(userCourseIDs[i].toString())
+      if (courseDocument.exists) {
+        let course: Course = {
+          id: courseDocument.data()['id'],
+          title: courseDocument.data()['title'],
+          description: courseDocument.data()['description'],
+          createdByUserID: courseDocument.data()['createdByUserID'],
+          imageURL: courseDocument.data()['imageURL']
+        }
+        userCourses.push(course);
+      }
+    }    
+  }
+
+  // Add a course to the SQLite DB
+  async addCourse(course: Course) {
+    let data = [course.id, course.title, course.description, course.createdByUserID, course.imageURL];
+    return this.storage
+      .executeSql(
+        "INSERT INTO songtable (id, title, courseDescription, createdByUserID, imagURL) VALUES (?, ?, ?, ?, ?)",
+        data
+      )
+      .then((res) => {
+        this.getSongs();
+      });
+  }
+
+  // Get list
+  async getCourses() {
+    return this.storage
+      .executeSql("SELECT * FROM favCourses", [])
+      .then((res) => {
+        let items: Course[] = [];
+        if (res.rows.length > 0) {
+          for (var i = 0; i < res.rows.length; i++) {
+            items.push({
+              id: res.rows.item(i).id,
+              title: res.rows.item(i).title,
+              description: res.rows.item(i).courseDescription,
+              createdByUserID: res.rows.item(i).createdByUserID,
+              imageURL: res.rows.item(i).imageURL
+            });
+          }
+        }
+        this.courseList.next(items);
+      });
+  }
+
+
   
   dbState() {
     return this.isDbReady.asObservable();
   }
 
-  fetchSongs(): Observable<Song[]> {
-    return this.songsList.asObservable();
+  fetchCourses(): Observable<Course[]> {
+    return this.courseList.asObservable();
   }
 
   // Render fake data
@@ -77,7 +150,7 @@ export class DbSqliteService {
             });
           }
         }
-        this.songsList.next(items);
+        this.courseList.next(items);
       });
   }
 

@@ -31,10 +31,9 @@ export class CourseDetailPage implements OnInit {
 
   async getCourse() {
     const id: string = this.route.snapshot.paramMap.get("id");
-
-    console.log("course-title: ", this.course.title)
     if (id) {
       const doccoumentData = await this.dbFS.getCourseById(id);
+      console.log("DocumentDID: ", doccoumentData.data()['id'])
         this.course.id = doccoumentData.data()['id'];
         this.course.title = doccoumentData.data()['title'];
         this.course.description = doccoumentData.data()['description'];

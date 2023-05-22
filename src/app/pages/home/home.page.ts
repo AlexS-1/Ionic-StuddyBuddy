@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
 import { Animal } from "../../models/animal.model";
-import { AnimalService } from "../../services/animal.service";
 import { DatabaseService } from "./../../services/database.service";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { Course } from "src/app/models/course";
@@ -20,7 +19,6 @@ export class HomePage implements OnInit {
   constructor(
     private db: DatabaseService,
     private dbFS: DbFirebaseService,
-    private animalService: AnimalService,
   ) {
 
   }
