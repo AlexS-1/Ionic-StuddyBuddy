@@ -1,19 +1,41 @@
 import { Component, OnInit } from "@angular/core";
-import { DbFirebaseService } from "src/app/services/db-firebase.service";
+import { AuthService } from "src/app/services/auth-service.service";
 
 @Component({
   selector: "app-log-in",
   templateUrl: "./log-in.page.html",
   styleUrls: ["./log-in.page.scss"],
 })
-export class LogInPage implements OnInit {
-  
-  categoryName: string = "";
-  categories: any = [];
-  editMode: boolean = false;
-  editId: number = 0;
+export class LogInPage {
+  email: string = "";
+  password: string = "";
 
-  constructor(public dbFS: DbFirebaseService) {}
+  message = ""
 
-  ngOnInit() {}
+  constructor(private authService: AuthService) {}
+
+  debugging = false
+
+
+  async onSubmit() {
+    const isValid = await this.authService.login(this.email, this.password);
+    if (this.debugging) {
+      console.log("onSubmit() function called"); // for debugging
+      console.log("email value:", this.email); // for debugging
+      console.log("password value:", this.password); // for debugging *
+    }
+    if (isValid) {
+      // perform login
+      this.message = "Succesfully logged in"
+      if (this.debugging) {
+        console.log("perform log-in");  // For DEBUGGGING
+      }
+    } else {
+      // display error message
+      this.message = "The password or mail is invalid"
+      if (this.debugging) {
+        console.log("invalid log-in data"); // For DEBUGGGING 
+      }
+    }
+  }
 }
