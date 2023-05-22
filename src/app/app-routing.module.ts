@@ -12,7 +12,8 @@ const routes: Routes = [
   {
     path: 'my-courses',
     loadChildren: () =>
-      import('./pages/my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
+      import('./pages/my-courses/my-courses.module').then( m => m.MyCoursesPageModule),
+      canActivate: [AuthGuardService]
   },
   {
     path: 'courses/:id',
@@ -53,7 +54,7 @@ const routes: Routes = [
     path: "my-area",
     loadChildren: () =>
       import("./pages/my-area/my-area.module").then((m) => m.MyAreaPageModule),
-    canActivate: [AuthGuardService]
+      canActivate: [AuthGuardService]
   },
   {
     path: '',
