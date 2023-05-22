@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import { AuthGuardService } from './services/auth-guard.service';
 
 
 const routes: Routes = [
@@ -49,9 +50,10 @@ const routes: Routes = [
       import("./pages/log-in/log-in.module").then((m) => m.LogInPageModule),
   },
   {
-    path: "person",
+    path: "my-area",
     loadChildren: () =>
-      import("./pages/person/person.module").then((m) => m.PersonPageModule),
+      import("./pages/my-area/my-area.module").then((m) => m.MyAreaPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: '',

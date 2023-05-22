@@ -3,12 +3,33 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>People</ion-title>
+    <ion-title>My Area</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <article class="my-area">
+    <h1>My Area</h1>
+    
+    <section class="sec">
+    <picture class="profilePic">
+      <img src="{{ user.profilePicture }}" alt="profile picture" width="100" height="120">       <!-- Check dimensions-->
+    </picture>
+    <!-- <app-image-upload-form class="upload-form" (profilePictureChanged)="updateUserInformation()"></app-image-upload-form> -->
+    </section>
+  
+    <section class="my-data">
+      <h2>My Data</h2>
+        <div class="my-data-content">
+          <p>Name: {{ user.firstName }} {{ user.surname }}</p>
+          <p>Date of Birth: {{ user.dateOfBirth }}</p>
+          <!-- <p>Number of Evaluations: {{ reviews.length }}</p> -->
+          <p>E-Mail: {{ user.email }}</p>
+        </div>
+    </section>
+  </article>
+  
+  <!--<ion-list>
     <ion-item>
       <ion-label>Select category</ion-label>
       <ion-select value="{{ selected_category_id }}" [(ngModel)]="category_id">
@@ -23,9 +44,9 @@
     </ion-item>
 
     <ion-button expand="block" (click)="addPerson()">Submit</ion-button>
-  </ion-list>
+  </ion-list>-->
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-item-sliding *ngFor="let person of persons">
       <ion-item-options side="start">
         <ion-item-option (click)="editPerson(person)">Edit</ion-item-option>
@@ -41,5 +62,5 @@
           (click)="deletePerson(person.id)">Delete</ion-item-option >
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
