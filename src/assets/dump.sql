@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS songtable(
+/*CREATE TABLE IF NOT EXISTS songtable(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     artist_name TEXT, 
     song_name TEXT
@@ -10,4 +10,12 @@ INSERT or IGNORE INTO songtable(id, artist_name, song_name) VALUES (4, 'Lauv', '
 INSERT or IGNORE INTO songtable(id, artist_name, song_name) VALUES (5, 'Heavy Steppers', 'Whateva');
 INSERT or IGNORE INTO songtable(id, artist_name, song_name) VALUES (6, 'DigDat 2020', 'Ei8ht Mile');
 INSERT or IGNORE INTO songtable(id, artist_name, song_name) VALUES (7, 'Blackbear', 'me & ur ghost');
-INSERT or IGNORE INTO songtable(id, artist_name, song_name) VALUES (8, 'Hailee Steinfeld', 'Wrong Direction');
+INSERT or IGNORE INTO songtable(id, artist_name, song_name) VALUES (8, 'Hailee Steinfeld', 'Wrong Direction');*/
+
+CREATE TABLE IF NOT EXISTS favCourses(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    courseDescription TEXT,
+    createdByUser TEXT,
+    imageURL TEXT
+);

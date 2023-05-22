@@ -114,7 +114,6 @@ export class DbFirebaseService {
         createdByUserID: doc.data()['createdByUserID'],
         imageURL: doc.data()['imageURL']
       }
-      console.log(course.imageURL)
       allCourses.push(course);
     });
     return allCourses;
@@ -122,6 +121,7 @@ export class DbFirebaseService {
 
   async getCourseById(id: string) {
     const courseObject = await this.db.collection('courses').doc(this.cyrb53(id.toString()).toString()).get();
+    console.log("cDID: ", courseObject.data()['id'])
     return courseObject;
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth-service.service";
+import { DbSqliteService } from "src/app/services/db-sqlite.service";
 
 @Component({
   selector: "app-log-in",
@@ -12,7 +13,8 @@ export class LogInPage {
 
   message = ""
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+    private dbSQL: DbSqliteService) {}
 
   debugging = false
 
@@ -27,6 +29,7 @@ export class LogInPage {
     if (isValid) {
       // perform login
       this.message = "Succesfully logged in"
+      this.dbSQL.syncSQLDatabase();
       if (this.debugging) {
         console.log("perform log-in");  // For DEBUGGGING
       }
