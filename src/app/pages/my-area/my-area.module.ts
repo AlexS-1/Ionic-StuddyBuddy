@@ -17,4 +17,6 @@ import { MyAreaPage } from './my-area.page';
   ],
   declarations: [MyAreaPage]
 })
-export class MyAreaPageModule {}
+export class MyAreaPageModule {
+  
+}

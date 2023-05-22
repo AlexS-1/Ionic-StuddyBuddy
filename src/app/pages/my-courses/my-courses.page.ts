@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { Animal } from "../../models/animal.model";
 import { AnimalService } from "../../services/animal.service";
-import { DatabaseService } from "./../../services/database.service";
+import { DatabaseService } from "../../services/database.service";
 
 @Component({
-  selector: "app-animal-list",
-  templateUrl: "./animal-list.page.html",
-  styleUrls: ["./animal-list.page.scss"],
+  selector: "app-my-courses-list",
+  templateUrl: "./my-courses.page.html",
+  styleUrls: ["./my-courses.page.scss"],
 })
-export class AnimalListPage implements OnInit {
+export class MyCoursesPage implements OnInit {
   
   animals: Animal[] = [];
   //private animals$: Observable<Animal[]>;
