@@ -15,7 +15,6 @@ import { Course } from "src/app/models/course";
 export class HomePage implements OnInit {
   
   courses: Course[] = [];
-  course: Course;
   //animals?: Observable<Animal[]>;
 
   constructor(
