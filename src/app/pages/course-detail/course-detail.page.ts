@@ -58,7 +58,6 @@ export class CourseDetailPage implements OnInit {
         }
       }
     }
-    console.log(this.favorite)
   }
 
   async toggleFavorite() {
