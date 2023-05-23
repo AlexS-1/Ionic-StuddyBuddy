@@ -7,5 +7,6 @@ export interface User {
     dateOfBirth: string, 
     password: string, 
     courses: number[], 
-    profilePicture: string
+    profilePicture: string,
+    isVerified?: boolean
 }
