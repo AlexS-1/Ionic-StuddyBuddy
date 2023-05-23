@@ -161,7 +161,8 @@ export class DbFirebaseService {
 
   //Update names of user
   async updateUser(user: User) {
-    this.db.collection('users').doc(this.cyrb53(user.id.toString()).toString()).set(user);
+    this.db.collection('users').doc(user.id.toString()).set(user);
+    console.log(user.id, user.firstName, user.surname)
   }
 
 //REMOVE DATA IN FIRESTORE

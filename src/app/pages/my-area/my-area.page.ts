@@ -12,6 +12,10 @@ import * as firebase from "firebase";
 })
 export class MyAreaPage implements OnInit {
   
+  //Input from form
+  firstName: string = "";
+  surname: string = ""
+
   user: User = {
     id: '',
     username: '',
@@ -47,11 +51,14 @@ export class MyAreaPage implements OnInit {
       this.user.courses = user.data()['courses'];
       this.user.profilePicture = user.data()['profilePicture'];
     }
+    this.firstName = this.user.firstName;
+    this.surname = this.user.surname;
   }
 
   updateUserInformation() {
+    this.user.firstName = this.firstName;
+    this.user.surname = this.surname;
     this.dbFS.updateUser(this.user)
-    console.log(this.user)
   }
 
   logout() {
