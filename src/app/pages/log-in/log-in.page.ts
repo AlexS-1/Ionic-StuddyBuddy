@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth-service.service";
-import { DbSqliteService } from "src/app/services/db-sqlite.service";
 
 @Component({
   selector: "app-log-in",
@@ -15,7 +15,8 @@ export class LogInPage {
 
   constructor(
     private authService: AuthService,
-    private dbSQL: DbSqliteService
+    //private dbSQL: DbSqliteService,
+    private router: Router
     ) {}
 
   debugging = false
@@ -31,8 +32,9 @@ export class LogInPage {
     }
     if (isValid) {
       // perform login
-      this.message = "Succesfully logged in"
-      this.dbSQL.syncSQLDatabase();
+      this.message = "Succesfully logged in";
+      this.router.navigateByUrl('/home');
+      //this.dbSQL.syncSQLDatabase();
       if (this.debugging) {
         console.log("perform log-in");  // For DEBUGGGING
       }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Course } from "src/app/models/course";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
-import { DbSqliteService } from "src/app/services/db-sqlite.service";
+//import { DbSqliteService } from "src/app/services/db-sqlite.service";
 //import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
   ) {
 
   }
-  ngOnInit(): void {
+  ngOnInit() {
     this.getCourses();
   }
 
