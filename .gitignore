@@ -192,4 +192,4 @@ packages/react-router/test/build/
 .npmrc
 
 # cordova sqlite
-plugins/cordova-sqlite-storage
+plugins
