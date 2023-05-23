@@ -13,18 +13,21 @@ export class LogInPage {
 
   message = ""
 
-  constructor(private authService: AuthService,
-    private dbSQL: DbSqliteService) {}
+  constructor(
+    private authService: AuthService,
+    private dbSQL: DbSqliteService
+    ) {}
 
-  debugging = false
+  debugging = true
 
 
   async onSubmit() {
-    const isValid = await this.authService.login(this.email, this.password);
+    const isValid = await this.authService.signInWithMailAndPwFSAuth(this.email, this.password);
     if (this.debugging) {
       console.log("onSubmit() function called"); // for debugging
       console.log("email value:", this.email); // for debugging
       console.log("password value:", this.password); // for debugging *
+      console.log("isValid", isValid);
     }
     if (isValid) {
       // perform login

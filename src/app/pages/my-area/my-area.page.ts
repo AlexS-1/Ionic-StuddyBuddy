@@ -62,7 +62,7 @@ export class MyAreaPage implements OnInit {
   }
 
   logout() {
-    this.authService.logout()
+    this.authService.signOutFSAuth();
     this.router.navigateByUrl('/home')
   }
 
