@@ -159,6 +159,11 @@ export class DbFirebaseService {
     }
   }
 
+  //Update names of user
+  async updateUser(user: User) {
+    this.db.collection('users').doc(this.cyrb53(user.id.toString()).toString()).set(user);
+  }
+
 //REMOVE DATA IN FIRESTORE
   // Remove user form logged in user
   async removeloggedInData(id: String| null): Promise<boolean>{
