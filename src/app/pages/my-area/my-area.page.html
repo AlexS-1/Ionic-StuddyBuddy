@@ -12,10 +12,10 @@
     <h1>My Area</h1>
     
     <section class="sec">
-    <picture class="profilePic">
-      <img src="{{ user.profilePicture }}" alt="profile picture" width="100" height="120">       <!-- Check dimensions-->
-    </picture>
-    <!-- <app-image-upload-form class="upload-form" (profilePictureChanged)="updateUserInformation()"></app-image-upload-form> -->
+      <picture class="profilePic">
+        <img src="{{ user.profilePicture }}" alt="profile picture" width="100" height="120">       <!-- Check dimensions-->
+      </picture>
+      <!-- <app-image-upload-form class="upload-form" (profilePictureChanged)="updateUserInformation()"></app-image-upload-form> -->
     </section>
   
     <section class="my-data">
@@ -23,8 +23,20 @@
         <div class="my-data-content">
           <p>Name: {{ user.firstName }} {{ user.surname }}</p>
           <p>Date of Birth: {{ user.dateOfBirth }}</p>
-          <!-- <p>Number of Evaluations: {{ reviews.length }}</p> -->
           <p>E-Mail: {{ user.email }}</p>
+        </div>
+    </section>
+
+    <section class="my-data">
+      <h2>Edit your personal information</h2>
+        <div class="my-data-content">
+          <form (submit)="updateUserInformation()">
+            <input type="text" name="firstName" id="firstName" [(ngModel)]="firstName" placeholder="First Name">
+            <input type="text" name="surname" id="surnmae" [(ngModel)]="surname" placeholder="Last Name">
+            <ion-button class="btn" type="submit button">
+              Update Information
+            </ion-button>
+          </form>
         </div>
     </section>
   </article>

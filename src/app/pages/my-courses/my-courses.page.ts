@@ -33,13 +33,18 @@ export class MyCoursesPage implements OnInit {
   } */
 
   ngOnInit() {    
-    this.getCourses();
+    //this.getCourses();
     /*this.dbSQL.getDatabaseState().subscribe((dbReady) => {
       if (dbReady) {
         this.getCourses();
       }
     }); 
     this.getCourses();*/
+  }
+
+  ionViewDidEnter() {
+    this.courses = []
+    this.getCourses();
   }
 
   async getCourses() {

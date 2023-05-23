@@ -56,7 +56,6 @@ export class DbFirebaseService {
   async addUser(user: User) {
     let message = "";
     let allowRegistration = this.checkUserEmailExists(user.email);
-    console.log("call checkFunction", allowRegistration)
 
     // Here: serach database for doc with matching user-id = this.cyrb53(this.username).toString() --> user_id
     const userDocument = this.db.collection('users').doc(this.cyrb53(user.username.toString()).toString());
@@ -104,7 +103,6 @@ export class DbFirebaseService {
 
   async getCourseById(id: string) {
     const courseObject = await this.db.collection('courses').doc(this.cyrb53(id.toString()).toString()).get();
-    console.log("cDID: ", courseObject.data()['id'])
     return courseObject;
   }
 
@@ -138,6 +136,7 @@ export class DbFirebaseService {
   }
 
 //UPDATE DATA IN FIRESTORE
+
   //Update the profile picture to a non-standard (called in my-area)
   async setProfilePicture(username: string, url: string) {
     const userID = this.cyrb53(username).toString();
@@ -159,6 +158,65 @@ export class DbFirebaseService {
     }
   }
 
+  //Update names of user
+  async updateUser(user: User) {
+    this.db.collection('users').doc(user.id.toString()).set(user);
+  }
+
+  //Update array of courses for users
+  async addToUsersCourses(username: string, courseID: number) {
+    const userID = this.cyrb53(username).toString();
+    const userReference = this.db.collection('users').doc(userID);
+    let userData = await this.getUserData(username);
+    if (userData.exists) {
+        let userCourses: number[] = userData.data()['courses'];
+        if (!userCourses.includes(courseID)) {
+            userCourses.push(courseID);
+        }
+        const data: User = {
+            id: userData.data()['id'] ,
+            username: userData.data()['username'],
+            firstName: userData.data()['firstName'],
+            surname: userData.data()['surname'],
+            email: userData.data()['email'],
+            dateOfBirth: userData.data()['dateOfBirth'],
+            password: userData.data()['password'],
+            courses: userCourses,
+            profilePicture: userData.data()['profilePicture']
+        }
+        await userReference.set(data);
+    }
+  }
+
+  async removeFromUserCourses(username: string, courseID: number) {
+    const userID = this.cyrb53(username).toString();
+    const userReference = this.db.collection('users').doc(userID);
+    let userData = await this.getUserData(username);
+    if (userData.exists) {
+        let userCourses: number[] = userData.data()['courses'];
+        if (userCourses.includes(courseID)) {
+          const index = userCourses.indexOf(courseID, 0);
+          if (index > -1) {
+             userCourses.splice(index, 1);
+          }
+        }
+        const data: User = {
+            id: userData.data()['id'] ,
+            username: userData.data()['username'],
+            firstName: userData.data()['firstName'],
+            surname: userData.data()['surname'],
+            email: userData.data()['email'],
+            dateOfBirth: userData.data()['dateOfBirth'],
+            password: userData.data()['password'],
+            courses: userCourses,
+            profilePicture: userData.data()['profilePicture']
+        }
+        await userReference.set(data);
+    }
+  }
+
+
+
 //REMOVE DATA IN FIRESTORE
   // Remove user form logged in user
   async removeloggedInData(id: String| null): Promise<boolean>{
@@ -170,8 +228,7 @@ export class DbFirebaseService {
     return true;
   }
 
-//HELPER FUNCTIONS
-
+//HELPER FUNCTIONS+
   checkUserEmailExists(userEmail: string): boolean {
     let emailExists: boolean = false;
     this.db.collection('users').where('email', '==', userEmail)
