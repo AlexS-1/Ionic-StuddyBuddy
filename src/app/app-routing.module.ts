@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/course-detail/course-detail.module').then( m => m.CourseDetailPageModule)
   },
-  {
+  /*{
     path: 'developers',
     loadChildren: () => 
       import('./pages/developers/developers.module').then( m => m.DevelopersPageModule)
@@ -39,7 +39,7 @@ const routes: Routes = [
     path: 'songs/:id',
     loadChildren: () => 
     import('./pages/song-details/song-details.module').then( m => m.SongDetailsPageModule)
-  },
+  },*/
   {
     path: "create-account",
     loadChildren: () =>
@@ -55,6 +55,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/my-area/my-area.module").then((m) => m.MyAreaPageModule),
       canActivate: [AuthGuardService]
+  },
+  {
+    path: 'login',
+    redirectTo: 'log-in',
+    pathMatch: 'full'
   },
   {
     path: '',
