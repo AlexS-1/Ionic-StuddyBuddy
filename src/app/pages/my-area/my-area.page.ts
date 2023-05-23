@@ -1,8 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Type } from "@angular/core";
 import { User } from "src/app/models/user";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { AuthService } from "src/app/services/auth-service.service";
 import { Router } from "@angular/router";
+import { AngularFireStorage } from "@angular/fire/storage";
+import * as firebase from "firebase/app";
 
 @Component({
   selector: "app-my-area",
@@ -14,6 +16,9 @@ export class MyAreaPage implements OnInit {
   //Input from form
   firstName: string = "";
   surname: string = ""
+  blob: Blob = new Blob();
+
+
 
   user: User = {
     id: '',
@@ -27,7 +32,11 @@ export class MyAreaPage implements OnInit {
     profilePicture: ''
   };
 
-  constructor(private dbFS: DbFirebaseService, private authService: AuthService, private router: Router) {
+  constructor(
+    private dbFS: DbFirebaseService, 
+    private authService: AuthService, 
+    private router: Router,
+    private fS: AngularFireStorage) {
 
   }
 
@@ -76,11 +85,7 @@ export class MyAreaPage implements OnInit {
     reader.onload = () => {
   
       // get the blob of the image:
-      let blob: Blob = new Blob([new Uint8Array((reader.result as ArrayBuffer))]);
-  
-      // create blobURL, such that we could use it in an image element:
-      let blobURL: string = URL.createObjectURL(blob);
-      
+      this.blob = new Blob([new Uint8Array((reader.result as ArrayBuffer))], {type : 'image/jpg'});
     };
   
     reader.onerror = (error) => {
@@ -89,5 +94,21 @@ export class MyAreaPage implements OnInit {
   
     };
   };
+
+  uploadImage() {
+    //Upload image to firebase storage
+    this.fS.upload(`uploads/${this.user.username}`, this.blob);
+
+    //Get URL once upload is finished
+    const storageRef = firebase.storage().ref('uploads');
+    storageRef.listAll().then((result) => {
+      result.items.forEach(async ref => {
+        if (ref.name.split(".")[0] == this.user.username) {
+          this.user.profilePicture = await ref.getDownloadURL();
+        }
+      })
+    })
+    this.updateUserInformation();
+  }
 
 }
