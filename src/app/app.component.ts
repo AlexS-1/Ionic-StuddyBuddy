@@ -36,13 +36,12 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    public database: DbService
+    private statusBar: StatusBar
   ) {
-    this.initializeApp();
+    //this.initializeApp();
   }
 
-  initializeApp() {
+  /*initializeApp() {
     this.platform.ready().then(() => {
       this.database.createDatabase().then(() => {
         //this.statusBar.styleDefault();
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit {
         this.splashScreen.hide();
       });
     });
-  }
+  }*/
 
   ngOnInit() {
     const path = window.location.pathname.split("folder/")[1];

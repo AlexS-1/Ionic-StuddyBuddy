@@ -9,7 +9,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 export class AuthGuardService {
   constructor(private authService: AuthService, private router: Router) {}
 
-  debugging = true;
+  debugging = false;
 
   // Check wherether a user has the required role to access a route
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {

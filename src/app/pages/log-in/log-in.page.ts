@@ -18,7 +18,7 @@ export class LogInPage {
     private dbSQL: DbSqliteService
     ) {}
 
-  debugging = true
+  debugging = false
 
 
   async onSubmit() {

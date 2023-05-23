@@ -20,26 +20,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/course-detail/course-detail.module').then( m => m.CourseDetailPageModule)
   },
-  /*{
-    path: 'developers',
-    loadChildren: () => 
-      import('./pages/developers/developers.module').then( m => m.DevelopersPageModule)
-  },
-  {
-    path: 'developers/:id',
-    loadChildren: () => 
-      import('./pages/developer/developer.module').then( m => m.DeveloperPageModule)
-  },
-  {
-    path: 'songs',
-    loadChildren: () => 
-    import('./pages/song-list/song-list.module').then( m => m.SongListPageModule)
-  },
-  {
-    path: 'songs/:id',
-    loadChildren: () => 
-    import('./pages/song-details/song-details.module').then( m => m.SongDetailsPageModule)
-  },*/
   {
     path: "create-account",
     loadChildren: () =>

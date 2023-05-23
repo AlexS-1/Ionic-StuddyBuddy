@@ -23,7 +23,7 @@ export class FileUploaderService {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
-    uploadTask.snapshotChanges().pipe(finalize(() => {
+    /*uploadTask.snapshotChanges().pipe(finalize(() => {
       storageRef.getDownloadURL().subscribe(async downloadURL => {
         fileUpload.url = downloadURL;
         fileUpload.name = fileUpload.file.name;
@@ -31,7 +31,7 @@ export class FileUploaderService {
         this.dbFS.setProfilePicture(username, fileUpload.url);
         this.saveFileData(fileUpload);
       });
-    })).subscribe();
+    })).subscribe();*/
     return uploadTask.percentageChanges();
   }
 

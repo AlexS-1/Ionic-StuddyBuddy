@@ -20,7 +20,7 @@ export class Song {
 })
 export class DbSqliteService {
 
-  debugging = true;
+  debugging = false;
 
   private storage: SQLiteObject;
   public courseList = new BehaviorSubject([]);
