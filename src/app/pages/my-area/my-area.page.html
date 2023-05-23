@@ -15,7 +15,12 @@
       <picture class="profilePic">
         <img src="{{ user.profilePicture }}" alt="profile picture" width="100" height="120">       <!-- Check dimensions-->
       </picture>
-      <!-- <app-image-upload-form class="upload-form" (profilePictureChanged)="updateUserInformation()"></app-image-upload-form> -->
+      <ion-button expand="full">
+        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+        <ion-label slot="end">Upload Image</ion-label>
+        <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+          accept="image/png, image/jpeg">
+      </ion-button>
     </section>
   
     <section class="my-data">
