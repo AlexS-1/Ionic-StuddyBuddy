@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { Animal } from "../../models/animal.model";
-import { CourseService } from "../../services/course.service";
-import { DatabaseService } from "../../services/database.service";
 import { Course } from "src/app/models/course";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
-import { DbSqliteService } from "src/app/services/db-sqlite.service";
 import { AuthService } from "src/app/services/auth-service.service";
 
 @Component({

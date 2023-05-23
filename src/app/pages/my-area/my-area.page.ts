@@ -3,7 +3,6 @@ import { User } from "src/app/models/user";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { AuthService } from "src/app/services/auth-service.service";
 import { Router } from "@angular/router";
-import * as firebase from "firebase";
 
 @Component({
   selector: "app-my-area",
