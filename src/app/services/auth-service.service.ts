@@ -31,7 +31,7 @@ export class AuthService {
     });
   }
 
-  debugging = true;
+  debugging = false;
 
   // Firebase Firestore
   db = this.firestore.firestore;
