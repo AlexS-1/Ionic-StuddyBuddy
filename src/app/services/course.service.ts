@@ -4,7 +4,6 @@ import {
   AngularFirestoreCollection,
 } from "@angular/fire/firestore";
 import { Course } from "../models/course";
-import { error } from "console";
 
 @Injectable({
   providedIn: "root",

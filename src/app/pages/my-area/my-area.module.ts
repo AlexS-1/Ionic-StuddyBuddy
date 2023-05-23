@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MyAreaPageRoutingModule } from './my-area-routing.module';
 
 import { MyAreaPage } from './my-area.page';
+import { ImageUploadFormComponent } from './image-upload-form/image-upload-form.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,10 @@ import { MyAreaPage } from './my-area.page';
     IonicModule,
     MyAreaPageRoutingModule
   ],
-  declarations: [MyAreaPage]
+  declarations: [
+    MyAreaPage,
+    ImageUploadFormComponent
+  ]
 })
 export class MyAreaPageModule {
   

@@ -1,0 +1,70 @@
+form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+/* Button for selecting file */
+input[type="file"] {
+    display: none;
+}
+
+.upload-label {
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #FFA100;
+    border: none;
+    padding: 10px 50px;
+}
+
+.upload-label:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+.upload-label-container {
+    margin: 10px auto;
+}
+
+/* Button for uploading */
+button {
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #FFA100;
+    border: none;
+    padding: 10px 50px;
+    margin: 10px auto;
+  }
+  
+button:hover:enabled {
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Progress-Bar and its text */
+.progress {
+    display: block;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 12px;
+    margin: 10px auto;
+}
+
+.progress-bar {
+    background-color: #FFA100;
+    border-radius: 12px;
+}
+
+.text {
+    padding: 0px 10px;
+}
+
+@media (max-width: 767px) {
+    form {
+        margin: 50px auto;
+    }
+}

@@ -9,6 +9,7 @@ import { Course } from '../models/course';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DbFirebaseService {
 
   constructor(private fS: AngularFirestore) {
@@ -83,24 +84,6 @@ export class DbFirebaseService {
     return message;
   }
 
-  checkUserEmailExists(userEmail: string): boolean {
-    let emailExists: boolean = false;
-    this.db.collection('users').where('email', '==', userEmail)
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        emailExists = true;
-      });
-    })
-    .catch((error) => {
-      console.log("Error finding email: ", error);
-    })
-    .finally(() => {
-      return emailExists
-    })
-    return emailExists;
-  }
-
 //READ DATA IN FIRESTORE
 
   async getAllCourses() {
@@ -155,19 +138,58 @@ export class DbFirebaseService {
   }
 
 //UPDATE DATA IN FIRESTORE
+  //Update the profile picture to a non-standard (called in my-area)
+  async setProfilePicture(username: string, url: string) {
+    const userID = this.cyrb53(username).toString();
+    const userReference = this.db.collection('users').doc(userID);
+    let userData = await this.getUserData(username);
+    if (userData.exists) {
+      const data: User = {
+          id: userData.data()['id'] ,
+          username: userData.data()['username'],
+          firstName: userData.data()['firstName'],
+          surname: userData.data()['surname'],
+          email: userData.data()['email'],
+          dateOfBirth: userData.data()['dateOfBirth'],
+          password: userData.data()['password'],
+          courses: userData.data()['courses'],
+          profilePicture: url
+      }
+      await userReference.set(data);
+    }
+  }
 
 //REMOVE DATA IN FIRESTORE
-// Remove user form logged in user
-async removeloggedInData(id: String| null): Promise<boolean>{
-  if(id == null){
-    return false;
+  // Remove user form logged in user
+  async removeloggedInData(id: String| null): Promise<boolean>{
+    if(id == null){
+      return false;
+    }
+    //await deleteDoc(doc(this.db, 'loggedIn', id.toString()));
+    this.db.collection('loggedIn').doc(id.toString()).delete();
+    return true;
   }
-  //await deleteDoc(doc(this.db, 'loggedIn', id.toString()));
-  this.db.collection('loggedIn').doc(id.toString()).delete();
-  return true;
-}
 
 //HELPER FUNCTIONS
+
+  checkUserEmailExists(userEmail: string): boolean {
+    let emailExists: boolean = false;
+    this.db.collection('users').where('email', '==', userEmail)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        emailExists = true;
+      });
+    })
+    .catch((error) => {
+      console.log("Error finding email: ", error);
+    })
+    .finally(() => {
+      return emailExists
+    })
+    return emailExists;
+  }
+
   // 53-Bit hash function from https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
   private cyrb53(str: string, seed = 0){
     let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;

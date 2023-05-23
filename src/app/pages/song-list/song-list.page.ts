@@ -22,7 +22,7 @@ export class SongListPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.db.dbState().subscribe((res) => {
+    /*this.db.dbState().subscribe((res) => {
       if (res) {
         this.db.getSongs().subscribe((item) => {
           this.Data = item;
@@ -32,7 +32,7 @@ export class SongListPage implements OnInit {
     this.mainForm = this.formBuilder.group({
       artist: [""],
       song: [""],
-    });
+    });*/
   }
 
   storeData() {
