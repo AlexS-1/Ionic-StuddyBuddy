@@ -1,8 +1,10 @@
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { DbFirebaseService } from './db-firebase.service';
+import * as firebase from 'firebase';
+import { User } from '../models/user';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +14,31 @@ export class AuthService {
   constructor(
     private router: Router, 
     private firestore: AngularFirestore, 
-    private backendDataService: DbFirebaseService) {
-
+    private backendDataService: DbFirebaseService,
+    private afAuth: AngularFireAuth
+    ) {
+      /* Saving user data in localstorage when 
+    logged in and setting up null when logged out */
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
+      }
+    });
   }
 
   debugging = false;
 
+  // Firebase Firestore
   db = this.firestore.firestore;
+
+  // Firebase Auth
+  auth = firebase.auth();
+  userData: any; // Save logged in user data
 
   // Valifation function to be called by login function
   // Returns the first match for email+password pair in user data array
@@ -155,6 +175,67 @@ export class AuthService {
       }
     }
     return "";
+  }
+
+  /////////////////////
+  /// FIREBASE AUTH ///
+  /////////////////////
+
+  async createNewUserFSAuth(user: User) {
+
+    // Add a new user to firestore Auth
+    let userMail = user.email; 
+    let userPw = user.password;
+    firebase.auth().createUserWithEmailAndPassword(userMail, userPw)
+    .then(async (result) => {
+        // Add the user to firestore (incl. passoword)
+        await this.backendDataService.addUser(user);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
+  async signInWithMailAndPwFSAuth(userMail: string, userPw: string) {
+    this.afAuth.auth.signInWithEmailAndPassword(userMail, userPw)
+    .then((result) => {
+      this.afAuth.authState.subscribe((user) => {
+        if (user) {
+          this.router.navigate(['home']);
+        }
+      });
+    })
+    .catch((error) => {
+      window.alert(error.message);
+    });
+  }
+
+  // Maybe not needed???
+  async onAuthStateChangedFSAuth(user: firebase.User) {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        var uid = user.uid;
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+  }
+
+  // Sign out
+  async signOutFSAuth() {
+    await this.afAuth.auth.signOut();
+    localStorage.removeItem('user');
+    this.router.navigate(['home']);
+  }
+
+  // Getter for login status from firebase Auth, reurns subscription to isVeryfied property
+  async isLoggedInFSAuth(){
+    return this.afAuth.authState.subscribe((result) => {
+      return result.emailVerified;
+    }) 
   }
 }
 
