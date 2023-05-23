@@ -28,17 +28,15 @@
     </section>
 
     <section class="my-data">
-      <h2>My Data Editable</h2>
+      <h2>Edit your personal information</h2>
         <div class="my-data-content">
           <form (submit)="updateUserInformation()">
-            <input type="text" name="firstName" id="firstName" [(ngModel)]="user.firstName" placeholder="First Name">
-            <input type="text" name="surname" id="surnmae" [(ngModel)]="user.surname" placeholder="Last Name">
+            <input type="text" name="firstName" id="firstName" [(ngModel)]="firstName" placeholder="First Name">
+            <input type="text" name="surname" id="surnmae" [(ngModel)]="surname" placeholder="Last Name">
             <ion-button class="btn" type="submit button">
               Update Information
             </ion-button>
           </form>
-          <p>Date of Birth: {{ user.dateOfBirth }}</p>
-          <p>E-Mail: {{ user.email }}</p>
         </div>
     </section>
   </article>
