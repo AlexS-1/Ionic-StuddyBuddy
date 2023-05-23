@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth-service.service';
 import { DbFirebaseService } from 'src/app/services/db-firebase.service';
 
 @Component({
@@ -24,7 +25,10 @@ export class CreateAccountPage implements OnInit {
   //Other variables
   passwordValidity = false;
 
-  constructor(private dbFS: DbFirebaseService) {
+  constructor(
+    private dbFS: DbFirebaseService,
+    private fsAuth: AuthService
+    ) {
 
   }
 
@@ -69,7 +73,8 @@ export class CreateAccountPage implements OnInit {
       id: "",
       courses: []
     }
-    this.message = await this.dbFS.addUser(user);
+    // call fs auth api, and hand over to legacy procedure (addUser to db)
+    this.message = await this.fsAuth.createNewUserFSAuth(user);
   }
 
 }

@@ -31,7 +31,7 @@ export class AuthService {
     });
   }
 
-  debugging = false;
+  debugging = true;
 
   // Firebase Firestore
   db = this.firestore.firestore;
@@ -155,23 +155,17 @@ export class AuthService {
 
   // Returns "" on failure
   async getCurrentUserName(): Promise<string>{
-    let userToken = sessionStorage.getItem('logInToken');
-    if (this.debugging) {
-      console.log(userToken);
+    let mail = this.afAuth.auth.currentUser.email;
+    if(this.debugging){
+      console.log("getcurrentUserName mail:", mail);
     }
-    if(userToken != null){
-      let retrUserMail = await this.retrieveUserMail(userToken);
+    if (mail != null) {
+      let uName = await this.backendDataService.getUserNameByMail(mail);
       if (this.debugging) {
-        console.log('mail: ', retrUserMail);
+        console.log('uName: ' , uName);
       }
-      if (retrUserMail != null) {
-        let uName = await this.backendDataService.getUserNameByMail(retrUserMail.toString());
-        if (this.debugging) {
-          console.log('uName: ' , uName);
-        }
-        if(uName != null){
-          return uName;
-        }
+      if(uName != null){
+        return uName;
       }
     }
     return "";
@@ -182,31 +176,43 @@ export class AuthService {
   /////////////////////
 
   async createNewUserFSAuth(user: User) {
-
     // Add a new user to firestore Auth
     let userMail = user.email; 
     let userPw = user.password;
-    firebase.auth().createUserWithEmailAndPassword(userMail, userPw)
+    return await firebase.auth().createUserWithEmailAndPassword(userMail, userPw)
     .then(async (result) => {
         // Add the user to firestore (incl. passoword)
-        await this.backendDataService.addUser(user);
+        return await this.backendDataService.addUser(user);
       })
       .catch((error) => {
         window.alert(error.message);
+        return "Could not add User: Firebase Auth Erorr"
       });
   }
 
   async signInWithMailAndPwFSAuth(userMail: string, userPw: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(userMail, userPw)
+    //let returnStatement = false;
+    return await this.afAuth.auth.signInWithEmailAndPassword(userMail, userPw)
     .then((result) => {
       this.afAuth.authState.subscribe((user) => {
         if (user) {
-          this.router.navigate(['home']);
+          if(this.debugging){
+          console.log("signed in auth")
+        }
+        //returnStatement = true;
+        }else{
+          // Case result.user is null
+          //returnStatement = false;
         }
       });
+      return result;;
     })
     .catch((error) => {
       window.alert(error.message);
+      if(this.debugging){
+        console.log("not signed in auth")
+      }
+      //return false;
     });
   }
 
@@ -233,9 +239,7 @@ export class AuthService {
 
   // Getter for login status from firebase Auth, reurns subscription to isVeryfied property
   async isLoggedInFSAuth(){
-    return this.afAuth.authState.subscribe((result) => {
-      return result.emailVerified;
-    }) 
+    return this.afAuth.auth.currentUser;
   }
 }
 

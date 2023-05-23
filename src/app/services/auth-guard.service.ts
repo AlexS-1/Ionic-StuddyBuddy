@@ -9,14 +9,22 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 export class AuthGuardService {
   constructor(private authService: AuthService, private router: Router) {}
 
+  debugging = true;
+
   // Check wherether a user has the required role to access a route
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-    if (! await this.authService.isLoggedIn()) {
+    if ((await this.authService.isLoggedInFSAuth())) {
+      if(this.debugging){
+        console.log("canActivate: ", true);
+      }
+      return true;      // State logged in
+    }else{
       // redirect to the login page if not logged in
+      if(this.debugging){
+        console.log("canActivate: ", false);
+      }
       this.router.navigate(['/log-in']);
       return false;     // State logged out
-    }else{
-      return true;      // State logged in
     }
   }
 }
