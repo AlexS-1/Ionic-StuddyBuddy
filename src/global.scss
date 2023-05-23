@@ -24,3 +24,27 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+///////////////////////////////////
+/// Put global style rules here ///
+/// ///////////////////////////////
+
+:root{
+    --ion-background-color: #D8DCFF;
+}
+
+ion-toolbar {
+    --ion-background-color: #6776ff;
+    --ion-text-color: black;
+}
+
+ion-card {
+    background-color: #a2bcff;
+    --ion-text-color: black;
+}
+
+ion-menu-button.md.button.in-toolbar {
+    background-color: #a2bcff;
+    border-radius: 10px;
+}
