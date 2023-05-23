@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { DatabaseService } from "../../services/database.service";
+import { ActivatedRoute, Router } from "@angular/router";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { Course } from "src/app/models/course";
+import { AuthService } from "src/app/services/auth-service.service";
 
 @Component({
   selector: "app-course-detail",
@@ -18,34 +18,60 @@ export class CourseDetailPage implements OnInit {
     createdByUserID: 0
   }
   favorite = false;
+  currentCourseID = 0;
   
   constructor(
     private route: ActivatedRoute,
-    private db: DatabaseService,
-    private dbFS: DbFirebaseService
+    private dbFS: DbFirebaseService,
+    private auth: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.getCourse();
+    this.checkFavorite();
   }
 
   async getCourse() {
     const id: string = this.route.snapshot.paramMap.get("id");
+    this.currentCourseID = Number(id);
     if (id) {
       const doccoumentData = await this.dbFS.getCourseById(id);
-      console.log("DocumentDID: ", doccoumentData.data()['id'])
         this.course.id = doccoumentData.data()['id'];
         this.course.title = doccoumentData.data()['title'];
         this.course.description = doccoumentData.data()['description'];
         this.course.createdByUserID = doccoumentData.data()['createdByUserID'];
-        console.log("course-title: ", this.course.title)
     }
   }
 
-  /*toggleFavorite(): void {
-    if (this.animal) {
-      this.animal.favorite = this.favorite;
-      this.animalService.toggleFavorite(this.animal);
+  async checkFavorite() { 
+    const loggedIn = await this.auth.isLoggedIn()
+    if (loggedIn) {
+      const username = await this.auth.getCurrentUserName();
+      const userData = await this.dbFS.getUserData(username);
+      if (userData.exists) {
+        const loggedInUserCourses: number[] = userData.data()['courses']
+        if (loggedInUserCourses.includes(this.currentCourseID)) {
+          this.favorite = true;
+        } else {
+          this.favorite = false;
+        }
+      }
     }
-  }*/
+    console.log(this.favorite)
+  }
+
+  async toggleFavorite() {
+    const loggedIn = await this.auth.isLoggedIn();
+    if (loggedIn) {
+      const username = await this.auth.getCurrentUserName();
+      if (this.favorite) {
+        this.dbFS.addToUsersCourses(username, this.currentCourseID);
+      } else {
+        this.dbFS.removeFromUserCourses(username, this.currentCourseID);
+      }
+    } else {
+      this.router.navigateByUrl('/log-in') 
+    }
+  }
 }
