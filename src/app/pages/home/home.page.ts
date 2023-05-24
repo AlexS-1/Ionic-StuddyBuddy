@@ -14,25 +14,16 @@ export class HomePage implements OnInit {
   courses: Course[] = [];
   //animals?: Observable<Animal[]>;
 
-  constructor(
-    private dbFS: DbFirebaseService,
-  ) {
+  constructor(private dbFS: DbFirebaseService) {
 
   }
+  
   ngOnInit() {
     this.getCourses();
   }
 
   ionViewDidEnter() {
     this.getCourses();
-    /* this.db.getDatabaseState().subscribe( (dbReady) => {
-
-      if (dbReady) {
-        //this.animals = this.animalService.getFavorites();
-        this.getAnimals();
-        this.title = 'Favorites';
-      }
-    }); */
   }
 
   async getCourses() {

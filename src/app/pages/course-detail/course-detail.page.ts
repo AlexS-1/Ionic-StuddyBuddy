@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DbFirebaseService } from "src/app/services/db-firebase.service";
 import { Course } from "src/app/models/course";
 import { AuthService } from "src/app/services/auth-service.service";
+import { AuthGuardService } from "src/app/services/auth-guard.service";
 
 @Component({
   selector: "app-course-detail",
@@ -24,6 +25,7 @@ export class CourseDetailPage implements OnInit {
     private route: ActivatedRoute,
     private dbFS: DbFirebaseService,
     private auth: AuthService,
+    private authGuard: AuthGuardService,
     private router: Router
   ) {}
 
@@ -61,8 +63,7 @@ export class CourseDetailPage implements OnInit {
   }
 
   async toggleFavorite() {
-    const loggedIn = await this.auth.isLoggedIn();
-    if (loggedIn) {
+    if (await this.auth.isLoggedInFSAuth()) {
       const username = await this.auth.getCurrentUserName();
       if (this.favorite) {
         this.dbFS.addToUsersCourses(username, this.currentCourseID);
@@ -70,7 +71,8 @@ export class CourseDetailPage implements OnInit {
         this.dbFS.removeFromUserCourses(username, this.currentCourseID);
       }
     } else {
-      this.router.navigateByUrl('/log-in') 
+      console.log("logged out")
+      this.router.navigateByUrl('/log-in')
     }
   }
 }
