@@ -20,30 +20,39 @@
         <div class="form-group">
             <input type="text" [(ngModel)]="firstName" class="form-control" name="firstName" placeholder="First Name" minlength="2" maxlength="32" required>
         </div>
+        <br>
         <div class="form-group">
             <input type="text" [(ngModel)]="surname" class="form-control" name="surname" placeholder="Surname" minlength="2" maxlength="32" required>
         </div>
+        <br>
         <div class="form-group">
             <input type="text" [(ngModel)]="username" class="form-control" name="username" placeholder="Username" minlength="4" maxlength="32" required>
         </div>
+        <br>
         <div class="form-group">
             <input type="date" [(ngModel)]="dateOfBirth" class="form-control" name="dateOfBirth" placeholder="Date of Birth" min="1930-01-01" max="2010-12-31" required>
-         </div>
+        </div>
+        <br>
         <div class="form-group">
             <input type="email" [(ngModel)]="email" id="email" class="form-control" name="email" placeholder="Email Address" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
         </div>
+        <br>
         <div class="form-group">
             <input type="password" [(ngModel)]="password" class="form-control" name="password" placeholder="Password" minlength="8" maxlength="25" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" (keyup)="checkValidityPassword($event)" required>
         </div>
+        <br>
         <div class="form-group">
             <input type="password" [(ngModel)]="repeatedPassword" class="form-control" name="repeatedPassword" placeholder="Repeat Password" minlength="8" maxlength="25" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" (keyup)="checkMatchingPasswords($event)" required>
         </div>
+        <br>
         <p class="errorMsg"> {{ message }}</p>
         <ion-button class="btn" type="submit button" [disabled]="createAccountForm.form.invalid || !passwordValidity">
             Create Account
-        </ion-button><br>
+        </ion-button>
+        <br>
+        <br>
         <a href="log-in" routerLink="/log-in" routerLinkActive="active" ariaCurrentWhenActive="page">You already have an Account?</a>
-    </form>
-</section>
+      </form>
+  </section>
 
 </ion-content>

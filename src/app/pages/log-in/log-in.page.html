@@ -14,12 +14,15 @@
       <div class="form-group">
         <input type="email" class="form-control" placeholder="Email" [(ngModel)]="email" name="email"  pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" required>
       </div>
+      <br>
       <div class="form-group">
         <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password"  name="password" required>
       </div>
+      <br>
       <div class="form-group">
           <ion-button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form. valid">Login</ion-button>
       </div>
+      <br>
       <p>{{ message }}</p>
       <section class="form-group text-center">
         <a href="create-account" routerLink="/create-account" routerLinkActive="active" ariaCurrentWhenActive="page">Don't have an Account yet?</a>

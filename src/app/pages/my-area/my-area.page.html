@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <article class="my-area">
+  <article class="my-area my-data">
     <h1>My Area</h1>
     
     <section class="sec">
@@ -23,7 +23,7 @@
       </ion-button>
     </section>
   
-    <section class="my-data">
+    <section>
       <h2>My Data</h2>
         <div class="my-data-content">
           <p>Name: {{ user.firstName }} {{ user.surname }}</p>
@@ -32,12 +32,14 @@
         </div>
     </section>
 
-    <section class="my-data">
+    <section class="edit">
       <h2>Edit your personal information</h2>
         <div class="my-data-content">
           <form (submit)="updateUserInformation()">
             <input type="text" name="firstName" id="firstName" [(ngModel)]="firstName" placeholder="First Name">
+            <br>
             <input type="text" name="surname" id="surnmae" [(ngModel)]="surname" placeholder="Last Name">
+            <br>
             <ion-button class="btn" type="submit button">
               Update Information
             </ion-button>
@@ -45,8 +47,8 @@
         </div>
     </section>
   </article>
-
-  <ion-button (click)="logout()">Logout</ion-button>
+  <br>
+  <ion-button class="my-data" (click)="logout()">Logout</ion-button>
   
   <!--<ion-list>
     <ion-item>
