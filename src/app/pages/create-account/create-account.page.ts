@@ -11,13 +11,13 @@ import { DbFirebaseService } from 'src/app/services/db-firebase.service';
 export class CreateAccountPage implements OnInit {
   
   //Input from form
-  firstName = 'Ale';
-  surname = 'Sch';
-  username = 'alesch';
-  dateOfBirth = '2001-03-13';
-  email = 'ale.sch.1@web.de';
-  password = 'StuddyBuddy@1';
-  repeatedPassword = 'StuddyBuddy@1';
+  firstName = '';
+  surname = '';
+  username = '';
+  dateOfBirth = '';
+  email = '';
+  password = '';
+  repeatedPassword = '';
 
   //Output to form
   message = '';
