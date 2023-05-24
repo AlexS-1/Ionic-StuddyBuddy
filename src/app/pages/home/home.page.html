@@ -7,31 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<!--
-<ion-header>
-  <ion-toolbar >
-
-    <ion-title>
-      {{title}}
-    </ion-title>
-    <ion-buttons slot="end">
-     
-      <ion-button [routerLink]="['/', 'developers']">
-        <ion-icon name="construct"></ion-icon>
-      </ion-button>
-
-      <ion-button [routerLink]="['/', 'animals']">
-        <ion-icon name="fish"></ion-icon>
-      </ion-button>
-
-   
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
--->
-
 <ion-content>
-  <!--<ion-searchbar [(ngModel)]="searchTerm"></ion-searchbar>-->
 
   <ion-list *ngFor="let course of courses">
       <ion-item
@@ -39,11 +15,9 @@
         class="ion-no-padding"
         style="margin: 4px !important">
 
-        <!-- TODO: Add image to courses -->
         <ion-thumbnail slot="start">
           <img [src]="course.imageURL" alt="{{ course.description }} ">
         </ion-thumbnail>
-        
 
         <ion-label>{{ course.title }}</ion-label>
 

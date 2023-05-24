@@ -47,8 +47,7 @@ export class CourseDetailPage implements OnInit {
   }
 
   async checkFavorite() { 
-    const loggedIn = await this.auth.isLoggedIn()
-    if (loggedIn) {
+    if (await this.auth.isLoggedInFSAuth()) {
       const username = await this.auth.getCurrentUserName();
       const userData = await this.dbFS.getUserData(username);
       if (userData.exists) {
